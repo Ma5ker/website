@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-4.6.0/css/bootstrap.css">
+</head>
+
+<body>
+    {% load my_tags %}
+    {% my_html_tag page_info.info.0|my_filter:page_info.info.1  %}
+    <p>Current date:{{ page_info.time | date:"Y-m-d" }}</p>
+</body>
+
+</html>
