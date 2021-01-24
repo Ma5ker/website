@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # django setting
-website/settings.py
+/website/settings.py
