@@ -130,3 +130,4 @@ dmypy.json
 
 # django setting
 /website/settings.py
+/statics/posted/
