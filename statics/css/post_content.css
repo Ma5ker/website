@@ -1,0 +1,110 @@
+div#post_content {
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    /* display: block; */
+    /* 渲染完成前不可见 */
+    display: none;
+}
+#post_content h2 {
+    font-size: 1.375em;
+    border-bottom: 1px solid #eee;
+}
+
+#post_content h3 {
+    font-size: 1.25em;
+    border-bottom: 1px dotted #eee;
+}
+
+#post_content h4{
+    font-size: 1em;
+}
+
+#post_content h2, #post_content h3, #post_content h4,#post_content h5,#post_content h6 {
+    font-family: Lato, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: bold;
+    line-height: 1.5;
+    padding-top: 10px;
+    margin: 20px 0 15px;
+}
+
+/* code block, from showdownjs demo page */
+#post_content pre {
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    background-color: #f8f8f8;
+    border: 1px solid #dfdfdf;
+    margin: 1.5em 1.5em 1.5em 1.5em;
+    padding: 0.125rem 0.3125rem 0.0625rem;
+}
+
+#post_content pre code {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+
+/* 设置table */
+#post_content table{
+    background: #fff;
+    border: solid 1px #ddd;
+    margin-bottom: 1.25rem;
+    table-layout: auto;
+    border-spacing: 3px;
+    display: table;
+    border-collapse: separate;
+}
+
+#post_content thead{
+    text-align: center;
+    background: #F5F5F5;
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+#post_content tr{
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+    border-collapse: separate;
+    border-spacing: 2px;
+
+}
+
+#post_content th{
+    display: table-cell;
+    line-height: 1.125rem;
+    color: #222;
+    font-size: 0.875rem;
+    font-weight: bold;
+    padding: 0.5rem 0.625rem 0.625rem;
+}
+
+
+#post_content tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+#back_top{
+    display: block;
+    font-size: 12px;
+	
+    box-sizing: border-box;
+    color: #fff;
+    background: #262a30;
+    padding: 8px 8px;
+    background: #222;
+    cursor: pointer;
+    opacity: 0.6;
+    position: fixed;
+    z-index: 1300;
+    height: 26px;
+    width: 26px;
+    right: 80px;
+    bottom: 80px;
+}

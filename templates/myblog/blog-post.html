@@ -1,0 +1,151 @@
+{% extends "myblog/base-post.html" %}
+
+{% block content %}
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+        <!-- Title -->
+        <h1 class="mt-4">{{ post_info.post_title }}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          by
+          <a href="#">{{ post_info.post_author }}</a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        {% with ctime=post_info.post_date|date:"Y-m-d"  %}
+          {% with utime=post_info.post_update_date|date:"Y-m-d" %}
+            {% if ctime == utime %}
+        <p>Posted on {{ ctime }}</p>
+            {% else %}
+        <p>Posted on {{ ctime }}; Updated on {{ utime }}</p>
+            {% endif %}
+          {% endwith %}
+        {% endwith %}
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+
+        <hr>
+
+        <div id='post_content'>
+        
+        {{ post_info.post_content }}
+
+        <hr>
+        
+        </div>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">Leave a Comment:</h5>
+          <div class="card-body">
+            <form id="comment_form">
+            {% csrf_token %} 
+              <div class="form-group">
+                <!-- 添加bootstrap弹出框样式错误提示 -->
+                <input type="text" id="comment_username" name="username" title="error" data-toggle="popover" data-placement="top" data-content="placeholder" placeholder="用户名">
+                <input type="text" id="comment_email" name="email" title="error" data-toggle="popover" data-placement="top" data-content="placeholder" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" id="comment_content" rows="3" name="content" title="error" data-toggle="popover" data-placement="left" data-content="placeholder" ></textarea>
+              </div>
+              <button type="button" class="btn btn-primary" id="comment_add">Submit</button>
+            </form>
+          </div>
+        </div>
+
+        <div id="comment_list">
+        {% for comm in comment_info %}
+        <!-- Single Comment -->
+        <div class="media mb-4">
+          <!-- <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt=""> -->
+          <div class="media-body">
+            <h5 class="mt-0">{{ comm.comm_name}}</h5>
+            <h6># {{ forloop.counter }}    |    <em>{{ comm.comm_created_time |date:"Y-m-d H:i" }}</em></h6>
+            {{ comm.comm_content }}
+          </div>
+        </div>
+        {% endfor %}
+        </div>
+        <script>
+        // 评论提交
+        $("#comment_add").click(function(){
+          //如果有弹出框则设置隐藏
+          $('#comment_username').popover('hide');
+          $('#comment_email').popover('hide');
+          $('#comment_content').popover('hide');
+
+          var username = $("#comment_username").val();
+          var email = $("#comment_email").val();
+          var content = $("#comment_content").val();
+          //验证 这个验证太丑陋了  以后需要优化
+          if(username==""){
+            $('#comment_username').attr("data-content","字段不能为空");
+            $('#comment_username').popover('show');
+            return;
+          }
+          if (email==""){
+            $('#comment_email').attr("data-content","字段不能为空");
+            $('#comment_email').popover('show');
+            return;
+          }
+          var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+          if(!re.test(email)){
+            $('#comment_email').attr("data-content","邮箱格式错误");
+            $('#comment_email').popover('show');
+            return;
+          }
+          if (content==""){
+            $('#comment_content').attr("data-content","字段不能为空");
+            $('#comment_content').popover('show');
+            return;
+          }
+
+          $.ajax({
+            type: "post",
+            url:"{% url "comments:add_comments" post_info.posted_id %}",
+            data: $('#comment_form').serialize(),
+            success: function(data){
+              
+              //solve data
+              if (data.state){
+                console.log(data);
+                //清空评论框
+                //jquery 转dom对象调用reset
+                $("form#comment_form")[0].reset();
+                //document.getElementById("comment_form").reset();
+
+                //添加新评论
+                var created_time = data.created_time;
+                var username = data.username;
+                var content = data.content;
+                var floor = data.floor;
+                var new_comm = `
+                <div class="media mb-4">
+                  <!-- <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt=""> -->
+                  <div class="media-body">
+                    <h5 class="mt-0">${username}</h5>
+                    <h6># ${floor}    |    <em>${created_time}</em></h6>
+                    ${content}
+                  </div>
+                </div>`;
+                $("div#comment_list").append(new_comm);
+
+              }else{
+                if (data.err_enum==1){
+                  alert("您评论过多了！");
+                }
+              }
+
+
+            }
+          })
+        })
+        </script>
+
+      </div>
+{% endblock %}

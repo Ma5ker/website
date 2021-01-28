@@ -1,0 +1,44 @@
+{% extends "myblog/base.html" %}
+{% block content %}
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4">Page Heading
+          <small>Secondary Text</small>
+        </h1>
+        {% comment %} 所有文章列表 {% endcomment %}
+        {% for posted in post_list %}
+        <!-- Blog Post -->
+        <div class="card mb-4">
+          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+          <div class="card-body">
+            <h3 class="card-title">{{ posted.post_title }}</h2>
+            <p class="card-text">{{ posted.post_text | truncatechars:100 }}</p>
+            <a href="{% url 'blog:post_detail' posted.pk %}" class="btn btn-primary">Read More &rarr;</a>
+          </div>
+          <div class="card-footer text-muted">
+            Posted on {{ posted.post_date | date:"Y-m-d" }} by
+            <a href="#">{{ posted.post_author }}</a>
+          </div>
+        </div>
+        {% endfor %}
+
+        
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <ul class="pagination justify-content-center mb-4">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&larr; Previous</a>
+          </li>
+        {% endif%}
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &rarr;</a>
+          </li>
+        {% endif %}
+        </ul>
+        {% endif %}
+
+      </div>
+{% endblock %}
