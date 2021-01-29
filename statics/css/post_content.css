@@ -54,10 +54,12 @@ div#post_content {
     border-spacing: 3px;
     display: table;
     border-collapse: separate;
+    word-break:normal; 
+    word-wrap:break-word;
 }
 
 #post_content thead{
-    text-align: center;
+    /* text-align: center; */
     background: #F5F5F5;
     display: table-header-group;
     vertical-align: middle;
@@ -108,3 +110,52 @@ div#post_content {
     right: 80px;
     bottom: 80px;
 }
+
+/* 输入框特效 */
+.form-input{
+    border: 0 none;
+    background-image: linear-gradient(#0069D9,#0069D9),linear-gradient(#bac6d3,#bac6d3);
+    background-size: 0px 2px,100% 1px;
+    background-repeat: no-repeat;background-position: center bottom,center calc(100% - 1px);
+    background-color: rgba(0,0,0,0);
+}
+
+input.form-input:focus{
+    background-size: 100% 2px,100% 1px;
+    transition: all 1s;
+    border: none;
+    outline: none;
+}
+
+/* 附加导航栏 */
+.sticky-top{
+    top: 5rem;
+}
+
+ul.nav-stacked{
+    margin-left:1rem;
+}
+
+div#post-guide  a.nav-link{
+    background-color: #fff;
+    /* padding: 1rem 1.4rem; */
+    padding-top: 0.1rem;
+    width:fit-content;
+    height:fit-content;
+    border-radius: 2px;
+}
+
+ul.nav-stacked li.nav-item a.active{
+    color: #fc6423;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*二级*/
+/* ul#post_guide_gen  ol.nav-item{
+    display:none;
+} */
+
+/* ol.nav-item a.active{
+    display:block;
+} */

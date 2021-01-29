@@ -30,8 +30,9 @@ class HomeView(ListView):
         return context
 
 def postview(request,post_id):
-    posted = Mypost.objects.get(pk=post_id)
-    if posted.post_article=="":
+    try:
+        posted = Mypost.objects.get(pk=post_id)
+    except:
         #博客文章不存在  重定向至错误页面
         return redirect(reverse("blog:error"))
     else:

@@ -2,25 +2,34 @@
 
 {% block content %}
       <!-- Post Content Column -->
-      <div class="col-lg-8">
+      <div class="col-lg-8" id="mypost-content" >
         <!-- Title -->
         <h1 class="mt-4">{{ post_info.post_title }}</h1>
 
         <!-- Author -->
+        {% comment %} <em>
         <p class="lead">
           by
           <a href="#">{{ post_info.post_author }}</a>
         </p>
+        </em>{% endcomment %}
+        <hr> 
 
-        <hr>
-
-        <!-- Date/Time -->
+        <!-- Date/Time and Author -->
         {% with ctime=post_info.post_date|date:"Y-m-d"  %}
           {% with utime=post_info.post_update_date|date:"Y-m-d" %}
             {% if ctime == utime %}
-        <p>Posted on {{ ctime }}</p>
+          <em> 
+            <p>Posted on {{ ctime }} by
+              <a href="#">{{ post_info.post_author }}</a>
+            </p>
+          </em> 
             {% else %}
-        <p>Posted on {{ ctime }}; Updated on {{ utime }}</p>
+          <em> 
+            <p>Posted on {{ ctime }} & Updated on {{ utime }} by
+              <a href="#">{{ post_info.post_author }}</a>
+            </p>
+          </em>
             {% endif %}
           {% endwith %}
         {% endwith %}
@@ -47,8 +56,8 @@
             {% csrf_token %} 
               <div class="form-group">
                 <!-- 添加bootstrap弹出框样式错误提示 -->
-                <input type="text" id="comment_username" name="username" title="error" data-toggle="popover" data-placement="top" data-content="placeholder" placeholder="用户名">
-                <input type="text" id="comment_email" name="email" title="error" data-toggle="popover" data-placement="top" data-content="placeholder" placeholder="Email">
+                <input type="text" class="form-input" id="comment_username" name="username" title="error" data-toggle="popover" data-placement="top" data-content="placeholder" placeholder="用户名">
+                <input type="text" class="form-input" id="comment_email" name="email" title="error" data-toggle="popover" data-placement="top" data-content="placeholder" placeholder="Email">
               </div>
               <div class="form-group">
                 <textarea class="form-control" id="comment_content" rows="3" name="content" title="error" data-toggle="popover" data-placement="left" data-content="placeholder" ></textarea>
@@ -59,17 +68,17 @@
         </div>
 
         <div id="comment_list">
-        {% for comm in comment_info %}
-        <!-- Single Comment -->
-        <div class="media mb-4">
-          <!-- <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt=""> -->
-          <div class="media-body">
-            <h5 class="mt-0">{{ comm.comm_name}}</h5>
-            <h6># {{ forloop.counter }}    |    <em>{{ comm.comm_created_time |date:"Y-m-d H:i" }}</em></h6>
-            {{ comm.comm_content }}
+          {% for comm in comment_info %}
+          <!-- Single Comment -->
+          <div class="media mb-4">
+            <!-- <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt=""> -->
+            <div class="media-body">
+              <h5 class="mt-0">{{ comm.comm_name}}</h5>
+              <h6># {{ forloop.counter }}    |    <em>{{ comm.comm_created_time |date:"Y-m-d H:i" }}</em></h6>
+              {{ comm.comm_content }}
+            </div>
           </div>
-        </div>
-        {% endfor %}
+          {% endfor %}
         </div>
         <script>
         // 评论提交
@@ -140,8 +149,6 @@
                   alert("您评论过多了！");
                 }
               }
-
-
             }
           })
         })

@@ -30,7 +30,7 @@
   <script src="/static/js/md_draw.js"></script>
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#post-guide" data-offset="30" >
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -70,9 +70,9 @@
       <!-- Sidebar Widgets Column -->
       <div class="col-md-4">
 
-        <!-- Search Widget -->
+        {% comment %} <!-- Search Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Search(暂不可用)</h5>
+          <h5 class="card-header text-center">Search(暂不可用)</h5>
           <div class="card-body">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Search for...">
@@ -81,37 +81,49 @@
               </span>
             </div>
           </div>
-        </div>
+        </div> {% endcomment %}
 
         <!-- Categories Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Categories</h5>
+          <h5 class="card-header text-center">所有分类</h5>
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0 list-inline" >
+              {% comment %} <div class="col-lg-6"> {% endcomment %}
+                {% comment %} <ul class="list-unstyled mb-0 list-inline" > {% endcomment %}
                   {% for ca in category_list %}
-                  <li>
-                    <a href="{% url 'blog:showcategory' %}?name={{ca.name}}">{{ca.name}}</a>
-                  </li>
+                  {% comment %} <li class="nav-link nav-item"> {% endcomment %}
+                    <a class="nav-link" href="{% url 'blog:showcategory' %}?name={{ca.name}}">{{ca.name}}</a>
+                  {% comment %} </li> {% endcomment %}
                   {% endfor %}
-                </ul>
-              </div>
+                {% comment %} </ul> {% endcomment %}
+              {% comment %} </div> {% endcomment %}
             </div>
           </div>
         </div>
 
-        <!-- Side Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Side Widget(暂未设置)</h5>
+
+        <!-- 附加导航栏 -->
+        <!--<div class="card my-4  sticky-top">-->
+        <div class="card my-4 sticky-top" id="post-guide">
+          <h5 class="card-header text-center">文章目录</h5>
           <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+            <ul class="nav navbar-nav nav-pills nav-stacked"  id ="post_guide_gen">
+              <!-- 下面这部分将从js动态生成 -->
+              {% comment %} <li class="nav-item">
+                <a class="nav-link" href="#top-level-interfaces">第一部分</a>
+                <ol class="nav-item">
+                  <a class="nav-link" href="#the-loader">第1.1部分</a>
+                </ol> {% endcomment %}
+                {% comment %} <a class="nav-link" href="#loading-binary">第二部分</a>
+                <a class="nav-link" href="#solve-engine">第三部分</a>
+                <a class="nav-link" href="#execution-engines">第四部分</a> {% endcomment %}
+
+            </ul>
           </div>
         </div>
-
-      {% comment %} <a id="back_top" href="script:;">    {% endcomment %}
-      {% comment %} <span>⌆</span>  {% endcomment %}
-      <i class="fa fa-arrow-up" id="back_top"></i>
+        {% comment %} <a id="back_top" href="script:;">    {% endcomment %}
+        {% comment %} <span>⌆</span>  {% endcomment %}
+        <i class="fa fa-arrow-up" id="back_top"></i>
 
       </div>
 
